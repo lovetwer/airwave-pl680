@@ -1,0 +1,742 @@
+[
+{
+"id": "24711f7f-8ff5-4141-8e0f-ab17f3da1b89",
+"name": "怀集音乐之声",
+"area": "广东",
+"url": "https://lhttp.qingting.fm/live/4804/64k.mp3",
+"tags": [
+"音乐"
+],
+"codec": "MP3",
+"votes": 10603
+},
+{
+"id": "835070cd-bf45-4e48-88a4-e9f9a0d7dd9e",
+"name": "CNR-1 中国之声",
+"area": "全国",
+"url": "https://lhttp.qtfm.cn/live/15318317/64k.mp3",
+"tags": [
+"新闻"
+],
+"codec": "MP3",
+"votes": 10166
+},
+{
+"id": "ab0cc7f6-df03-4923-ac83-f4a7d8c55916",
+"name": "国际新闻",
+"area": "全国",
+"url": "https://lhttp.qtfm.cn/live/20500172/64k.mp3",
+"tags": [
+"资讯",
+"新闻"
+],
+"codec": "MP3",
+"votes": 7321
+},
+{
+"id": "815f20d0-3ecd-49d2-8449-9725e82b5f64",
+"name": "500首华语经典",
+"area": "全国",
+"url": "https://lhttp.qtfm.cn/live/5022308/64k.mp3",
+"tags": [
+"音乐",
+"老歌"
+],
+"codec": "MP3",
+"votes": 4462
+},
+{
+"id": "ba8cf3a2-70c7-4567-9d9f-e6d028aecb2a",
+"name": "两广之声音乐台",
+"area": "广东",
+"url": "https://lhttp.qtfm.cn/live/20500149/64k.mp3",
+"tags": [
+"网络电台",
+"老歌"
+],
+"codec": "MP3",
+"votes": 2704
+},
+{
+"id": "90cefd55-a82f-4ef8-96da-cc1723f7f544",
+"name": "广东珠江经济台",
+"area": "广东",
+"url": "https://lhttp.qtfm.cn/live/1259/64k.mp3",
+"tags": [
+"经济"
+],
+"codec": "MP3",
+"votes": 1910
+},
+{
+"id": "288d0219-4d05-4f5d-8b1d-671bb6c51733",
+"name": "安徽小说评书广播",
+"area": "安徽",
+"url": "https://lhttp.qtfm.cn/live/1951/64k.mp3",
+"tags": [
+"故事"
+],
+"codec": "MP3",
+"votes": 1726
+},
+{
+"id": "e87de336-49bb-4f67-887c-ddfb25de6384",
+"name": "北京新闻广播",
+"area": "北京",
+"url": "https://lhttp.qtfm.cn/live/339/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 1226
+},
+{
+"id": "7bd359bf-9653-11e8-a767-52543be04c81",
+"name": "Shanghai FM 101 上海动感101",
+"area": "上海",
+"url": "https://lhttp.qingting.fm/live/274/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 801
+},
+{
+"id": "9fed76be-4d4f-4956-a766-7eae9647f025",
+"name": "AsiaFM亚洲音乐台",
+"area": "港澳",
+"url": "https://lhttp.qingting.fm/live/4581/64k.mp3",
+"tags": [
+"音乐"
+],
+"codec": "MP3",
+"votes": 771
+},
+{
+"id": "53ec59f3-9b3f-41b3-b5d3-89fecf58ec78",
+"name": "济南故事广播",
+"area": "山东",
+"url": "https://lhttp.qtfm.cn/live/1672/64k.mp3",
+"tags": [
+"文化",
+"教育"
+],
+"codec": "MP3",
+"votes": 710
+},
+{
+"id": "6d83cb72-52aa-4b26-83ee-010d44e8ad2d",
+"name": "北京交通广播",
+"area": "北京",
+"url": "https://lhttp.qingting.fm/live/336/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 658
+},
+{
+"id": "fd5d7353-3298-4242-918f-dd7ef527b950",
+"name": "北京文艺广播",
+"area": "北京",
+"url": "https://lhttp.qtfm.cn/live/333/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 562
+},
+{
+"id": "ca431b13-ca35-454b-a4a6-7e7cf6afadd2",
+"name": "四川新闻广播",
+"area": "四川",
+"url": "https://lhttp.qtfm.cn/live/4906/64k.mp3",
+"tags": [
+"资讯",
+"新闻"
+],
+"codec": "MP3",
+"votes": 429
+},
+{
+"id": "46c79dfa-1a99-4139-a052-81c434f259dd",
+"name": "Fred Film Radio(中文)",
+"area": "全国",
+"url": "https://s10.webradio-hosting.com/proxy/fredradiocn/stream",
+"tags": [
+"文化",
+"影视"
+],
+"codec": "MP3",
+"votes": 425
+},
+{
+"id": "d3eda505-e9d9-4c43-bb42-dae83d9566f6",
+"name": "江苏经典流行音乐广播",
+"area": "江苏",
+"url": "https://lhttp.qtfm.cn/live/4938/64k.mp3",
+"tags": [
+"华语流行"
+],
+"codec": "MP3",
+"votes": 400
+},
+{
+"id": "751de35b-f169-45fa-9fd5-ef4284fbe91e",
+"name": "Big B Radio亚洲音乐台",
+"area": "辽宁",
+"url": "https://antares.dribbcast.com/proxy/apop?mp=/s",
+"tags": [
+"音乐",
+"流行"
+],
+"codec": "MP3",
+"votes": 387
+},
+{
+"id": "82a2903d-b2d7-49c6-93f1-c1d734a9d21a",
+"name": "REPLAY NEWS - 中文 每5分钟播报一次新闻的电台",
+"area": "辽宁",
+"url": "https://replaynewszh.ice.infomaniak.ch/replaynewszh-128.mp3",
+"tags": [
+"新闻"
+],
+"codec": "MP3",
+"votes": 318
+},
+{
+"id": "34d03c7b-8352-40e0-831c-0477a0d507f4",
+"name": "四川交通广播",
+"area": "四川",
+"url": "https://lhttp.qtfm.cn/live/4886/64k.mp3",
+"tags": [
+"交通"
+],
+"codec": "MP3",
+"votes": 269
+},
+{
+"id": "2dd8574f-d5bf-4015-94a6-5ac32c61bff3",
+"name": "四川音乐广播",
+"area": "四川",
+"url": "https://lhttp.qtfm.cn/live/1110/64k.mp3",
+"tags": [
+"音乐",
+"流行"
+],
+"codec": "MP3",
+"votes": 254
+},
+{
+"id": "052a66ef-bcd1-4acf-a736-edcbad6bf1b5",
+"name": "安徽交通广播",
+"area": "安徽",
+"url": "https://lhttp.qtfm.cn/live/1949/64k.mp3",
+"tags": [
+"交通"
+],
+"codec": "MP3",
+"votes": 221
+},
+{
+"id": "24648e9f-6cde-4f91-9a9b-e605d275d975",
+"name": "湖北之声（调频版）（2）",
+"area": "湖北",
+"url": "https://lhttp.qingting.fm/live/1303/64k.mp3",
+"tags": [
+"新闻"
+],
+"codec": "MP3",
+"votes": 205
+},
+{
+"id": "b77045b4-f44d-4a49-aed7-3aeb0cc02cbc",
+"name": "湖北经典音乐广播",
+"area": "湖北",
+"url": "https://lhttp.qtfm.cn/live/1296/64k.mp3",
+"tags": [
+"老歌"
+],
+"codec": "MP3",
+"votes": 184
+},
+{
+"id": "598d4b07-238a-437a-9d4e-bb26215f4385",
+"name": "厦门音乐广播",
+"area": "福建",
+"url": "https://lhttp.qtfm.cn/live/1739/64k.mp3",
+"tags": [
+"音乐"
+],
+"codec": "MP3",
+"votes": 172
+},
+{
+"id": "2d6cedb1-97df-4e2e-a507-e1760b00524f",
+"name": "沧州长书文艺广播",
+"area": "河北",
+"url": "https://lhttp.qingting.fm/live/5021902/64k.mp3",
+"tags": [
+"音乐",
+"沧州音乐广播"
+],
+"codec": "MP3",
+"votes": 169
+},
+{
+"id": "2fb2daa2-7271-4b9d-a3f2-31a3598829df",
+"name": "아리랑모바일방송",
+"area": "全国",
+"url": "https://lhttp.qingting.fm/live/5022144/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 159
+},
+{
+"id": "4260076d-e6d9-4e49-a3b2-d554f4cb0a7e",
+"name": "济南音乐广播",
+"area": "山东",
+"url": "https://lhttp.qtfm.cn/live/1671/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 158
+},
+{
+"id": "ed2cc553-e526-4388-a113-d3b5d062e58f",
+"name": "长沙音乐广播",
+"area": "湖南",
+"url": "https://lhttp.qtfm.cn/live/20847/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 155
+},
+{
+"id": "60c8cc81-b926-4c06-8f29-56a86aa0ff91",
+"name": "陕西新闻广播",
+"area": "陕西",
+"url": "https://lhttp.qtfm.cn/live/1600/64k.mp3",
+"tags": [
+"新闻"
+],
+"codec": "MP3",
+"votes": 125
+},
+{
+"id": "522d7aff-9661-11e8-a767-52543be04c81",
+"name": "Sichuan News 四川综合广播FM98.1",
+"area": "四川",
+"url": "https://lhttp.qingting.fm/live/4906/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 122
+},
+{
+"id": "b1ac53da-6e94-41f4-95c1-fcd9bf1cc4a4",
+"name": "陕西音乐广播",
+"area": "陕西",
+"url": "https://lhttp.qtfm.cn/live/4873/64k.mp3",
+"tags": [
+"音乐"
+],
+"codec": "MP3",
+"votes": 111
+},
+{
+"id": "cd8ebd62-a542-48b0-82cd-eca8ffb639ee",
+"name": "九江年代音乐台",
+"area": "江西",
+"url": "https://lhttp.qingting.fm/live/20212210/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 110
+},
+{
+"id": "efdd6b48-abaa-4bd3-899a-d3e2e6f563e5",
+"name": "昆明汽车广播",
+"area": "云南",
+"url": "https://lhttp.qtfm.cn/live/1936/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 109
+},
+{
+"id": "44fbcc1f-c631-4607-ba0e-0cd178d36de0",
+"name": "江西故事广播",
+"area": "江西",
+"url": "https://lhttp.qtfm.cn/live/20500092/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 105
+},
+{
+"id": "7907971e-3989-4a0f-9945-0ab48c4fffc0",
+"name": "乌鲁木齐维语广播",
+"area": "新疆",
+"url": "https://lhttp.qtfm.cn/live/1923/64k.mp3",
+"tags": [
+"新闻",
+"公共广播"
+],
+"codec": "MP3",
+"votes": 92
+},
+{
+"id": "4559582e-6dcb-4e3c-b20f-bbd9d87a66f8",
+"name": "黑龙江音乐广播",
+"area": "黑龙江",
+"url": "https://lhttp.qtfm.cn/live/4969/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 88
+},
+{
+"id": "ae364ccf-4db4-412f-a1b4-c2bf71ea211e",
+"name": "晋城交通广播",
+"area": "山西",
+"url": "https://lhttp.qtfm.cn/live/1189/64k.mp3",
+"tags": [
+"交通"
+],
+"codec": "MP3",
+"votes": 87
+},
+{
+"id": "e6738a6d-977d-46b6-a2a6-11dff5f6109f",
+"name": "云南音乐广播",
+"area": "云南",
+"url": "https://lhttp.qtfm.cn/live/1929/64k.mp3",
+"tags": [
+"音乐"
+],
+"codec": "MP3",
+"votes": 83
+},
+{
+"id": "8539abda-bd70-485c-a485-041de6c1608b",
+"name": "咸阳综合广播",
+"area": "陕西",
+"url": "https://lhttp.qingting.fm/live/5022397/64k.mp3",
+"tags": [
+"新闻"
+],
+"codec": "MP3",
+"votes": 81
+},
+{
+"id": "1d1d39a0-9653-471f-af01-45a390e74308",
+"name": "南昌交通音乐广播",
+"area": "江西",
+"url": "https://lhttp.qtfm.cn/live/1804/64k.mp3",
+"tags": [
+"娱乐",
+"音乐"
+],
+"codec": "MP3",
+"votes": 80
+},
+{
+"id": "136b1049-e6bf-413f-8c89-786a3c057b80",
+"name": "云南新闻广播",
+"area": "云南",
+"url": "https://lhttp.qtfm.cn/live/1926/64k.mp3",
+"tags": [
+"新闻"
+],
+"codec": "MP3",
+"votes": 77
+},
+{
+"id": "c2e1d5f7-66a0-4e78-8629-00279a6d0490",
+"name": "陕西农村广播",
+"area": "陕西",
+"url": "https://lhttp.qtfm.cn/live/1602/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 76
+},
+{
+"id": "19638780-7427-4967-b6ff-70d17c3c53a7",
+"name": "北仑电台",
+"area": "浙江",
+"url": "https://lhttp.qingting.fm/live/1153/64k.mp3",
+"tags": [
+"娱乐"
+],
+"codec": "MP3",
+"votes": 74
+},
+{
+"id": "e6dea335-9b93-46a2-b3e9-4e25693042ed",
+"name": "杭州交通经济广播",
+"area": "浙江",
+"url": "https://lhttp.qtfm.cn/live/1133/64k.mp3",
+"tags": [
+"娱乐",
+"广播"
+],
+"codec": "MP3",
+"votes": 74
+},
+{
+"id": "36b656c9-7487-4d4d-8dd5-cadf02b0c545",
+"name": "湖北经济广播",
+"area": "湖北",
+"url": "https://lhttp.qtfm.cn/live/1295/64k.mp3",
+"tags": [
+"经济"
+],
+"codec": "MP3",
+"votes": 67
+},
+{
+"id": "8734dc92-de77-46f7-9889-fbcb14a46858",
+"name": "甘肃交通广播",
+"area": "甘肃",
+"url": "https://lhttp.qingting.fm/live/3939/64k.mp3",
+"tags": [
+"交通"
+],
+"codec": "MP3",
+"votes": 66
+},
+{
+"id": "0de0cc38-39fa-43bc-9af9-5048e6e3e627",
+"name": "新疆文化旅游广播",
+"area": "新疆",
+"url": "https://lhttp.qtfm.cn/live/1909/64k.mp3",
+"tags": [
+"文化"
+],
+"codec": "MP3",
+"votes": 62
+},
+{
+"id": "05575706-4776-42e1-a760-2ca2f8dd5def",
+"name": "永川之声100.7",
+"area": "重庆",
+"url": "https://lhttp.qtfm.cn/live/20210236/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 61
+},
+{
+"id": "db59b146-457d-4436-a77e-46c15d33daf8",
+"name": "贵州音乐广播",
+"area": "贵州",
+"url": "https://lhttp.qtfm.cn/live/20067/64k.mp3",
+"tags": [
+"音乐"
+],
+"codec": "MP3",
+"votes": 61
+},
+{
+"id": "36779826-ec93-41ab-bf74-87c8b6c3926f",
+"name": "巴南综合广播",
+"area": "重庆",
+"url": "https://lhttp.qtfm.cn/live/5022385/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 59
+},
+{
+"id": "bd0579bc-6296-4ae7-bcda-c2e5917a2fb2",
+"name": "阿基米德-健康电台",
+"area": "上海",
+"url": "https://lhttp-hw.qtfm.cn/live/20500232/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 58
+},
+{
+"id": "0b280a5f-5f12-4525-8d47-0a7f33e5af22",
+"name": "黄冈交通音乐广播",
+"area": "全国",
+"url": "https://lhttp.qingting.fm/live/20207776/64k.mp3",
+"tags": [
+"音乐"
+],
+"codec": "MP3",
+"votes": 53
+},
+{
+"id": "d92fe019-c0f2-4bc4-84d3-79a5f14cf66c",
+"name": "温州综合广播",
+"area": "浙江",
+"url": "https://lhttp.qtfm.cn/live/1155/64k.mp3",
+"tags": [
+"新闻"
+],
+"codec": "MP3",
+"votes": 50
+},
+{
+"id": "922a7528-3be2-45a5-acc0-0054929d6550",
+"name": "祥符广播919",
+"area": "河南",
+"url": "https://lhttp.qtfm.cn/live/20500156/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 49
+},
+{
+"id": "c65565b0-2b33-4e24-b1aa-eda6035b43db",
+"name": "巴音郭楞交通广播",
+"area": "新疆",
+"url": "https://lhttp.qingting.fm/live/5022104/64k.mp3",
+"tags": [
+"交通"
+],
+"codec": "MP3",
+"votes": 45
+},
+{
+"id": "43da4f2e-6bde-4d4d-9f55-819d16fda32e",
+"name": "拉萨综合广播",
+"area": "西藏",
+"url": "https://lhttp-hw.qtfm.cn/live/5022138/64k.mp3",
+"tags": [
+"资讯"
+],
+"codec": "MP3",
+"votes": 34
+},
+{
+"id": "da892c2d-9bd0-41f1-80fd-8fcd11e3ed6c",
+"name": "青海新闻综合广播",
+"area": "青海",
+"url": "https://lhttp-hw.qtfm.cn/live/20063/64k.mp3",
+"tags": [
+"新闻"
+],
+"codec": "MP3",
+"votes": 27
+},
+{
+"id": "c05ff130-8e23-43fa-b44b-d9c4da056041",
+"name": "LOVE Radio",
+"area": "上海",
+"url": "https://lhttp.qingting.fm/live/273/64k.mp3?app_id=web",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 20
+},
+{
+"id": "e0475ba0-c951-421d-b92b-d947799c6659",
+"name": "延边旅游广播",
+"area": "吉林",
+"url": "https://lhttp-hw.qtfm.cn/live/5022438/64k.mp3",
+"tags": [
+"娱乐",
+"广播"
+],
+"codec": "MP3",
+"votes": 17
+},
+{
+"id": "a9a02b27-501c-41f8-944c-b4590a84c97e",
+"name": "杭州城市资讯广播 FM90.7杭州潮流音乐电台",
+"area": "浙江",
+"url": "https://lhttp-hw.qtfm.cn/live/15318146/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 13
+},
+{
+"id": "d30bc02b-e386-4911-9694-6d276b9c8101",
+"name": "杭州市广播电视台西湖之声",
+"area": "浙江",
+"url": "https://lhttp.qtfm.cn/live/1163/64k.mp3",
+"tags": [
+"娱乐"
+],
+"codec": "MP3",
+"votes": 12
+},
+{
+"id": "99b7d8fa-be02-4407-8c1d-9683d8f75302",
+"name": "FM998 舟山新闻综合广播",
+"area": "全国",
+"url": "https://lhttp.qingting.fm/live/1160/64k.mp3",
+"tags": [
+"新闻",
+"谈话"
+],
+"codec": "MP3",
+"votes": 10
+},
+{
+"id": "609cc90d-bbe7-44e8-8dfd-b10866a7c568",
+"name": "陕西交通广播",
+"area": "陕西",
+"url": "https://lhttp.qtfm.cn/live/1601/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 6
+},
+{
+"id": "44b6801f-4e03-48c7-812f-3a2e9bf487d0",
+"name": "西安新闻广播",
+"area": "陕西",
+"url": "https://lhttp.qtfm.cn/live/1610/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 6
+},
+{
+"id": "868db553-6423-4950-8006-4d7e23d01b80",
+"name": "深圳私家车广播 FM94.2",
+"area": "广东",
+"url": "https://lhttp.qtfm.cn/live/1273/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 5
+},
+{
+"id": "b70f05cf-c652-4eee-96db-88c4b1a1643f",
+"name": "深圳交通广播 FM106.2",
+"area": "广东",
+"url": "https://lhttp.qtfm.cn/live/1286/64k.mp3",
+"tags": [
+"广播"
+],
+"codec": "MP3",
+"votes": 4
+}
+]

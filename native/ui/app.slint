@@ -1,0 +1,1543 @@
+import { ListView } from "std-widgets.slint";
+
+// AIRWAVE PL-680 · native replica
+// 尺寸与配色对齐 radio/app.css
+
+export struct Station {
+    name: string,
+    area: string,
+    tagline: string,
+    codec: string,
+    hls: bool,
+    fav: bool,
+    code: string,
+}
+
+export struct Chip {
+    label: string,
+    n: int,
+    c: string,
+    on: bool,
+}
+
+component KeyLabel inherits Text {
+    color: #ff6a5d;
+    opacity: 0.92;
+    font-family: "JetBrains Mono";
+    font-size: 6.3px;
+    horizontal-alignment: center;
+    letter-spacing: 0.1px;
+}
+
+component KeyCap inherits Rectangle {
+    in property <string> label;
+    in property <bool> active: false;
+    in property <bool> star: false;
+    in property <string> face: "JetBrains Mono";
+    in property <length> kw: 62px;
+    callback tapped();
+    height: 24px;
+    width: root.kw;
+    border-radius: 3px;
+    border-width: 1px;
+    border-color: #080a0b;
+    background: active || star ? @linear-gradient(180deg, #3a2220 0%, #2a1a19 100%) : @linear-gradient(180deg, #2b3034 0%, #202428 54%, #191c1f 100%);
+    Text {
+        text: root.label;
+        color: root.active ? #ffb3aa : #c6cbcc;
+        font-family: root.face;
+        font-size: 10.5px;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+        width: 100%;
+        height: 100%;
+    }
+    ta := TouchArea {
+        mouse-cursor: pointer;
+        clicked => { root.tapped(); }
+    }
+}
+
+component KeyUnit inherits VerticalLayout {
+    in property <string> hint: "";
+    in property <string> label: "";
+    in property <bool> active: false;
+    in property <string> face: "JetBrains Mono";
+    in property <length> kw: 62px;
+    callback tapped();
+    spacing: 2px;
+    height: 35px;
+    KeyLabel { text: root.hint; width: root.kw; }
+    KeyCap { label: root.label; kw: root.kw; active: root.active; face: root.face; tapped => { root.tapped(); } }
+}
+
+component SetRow inherits Rectangle {
+    in property <string> title: "";
+    in property <string> en: "";
+    in property <bool> on: false;
+    callback toggled();
+    height: 44px;
+    background: transparent;
+    VerticalLayout {
+        x: 2px;
+        width: parent.width - 56px;
+        height: parent.height;
+        spacing: 2px;
+        alignment: center;
+        Text { text: root.title; color: root.on ? #e8ebe7 : #c2c7c7; font-size: 11px; }
+        Text { text: root.en; color: #5f6669; font-family: "JetBrains Mono"; font-size: 6.2px; letter-spacing: 1px; }
+    }
+    Rectangle {
+        x: parent.width - 42px;
+        y: (parent.height - 20px) / 2;
+        width: 40px;
+        height: 20px;
+        border-radius: 10px;
+        background: root.on ? @linear-gradient(180deg, #3a201d, #2a1513) : @linear-gradient(180deg, #23272a, #191c1f);
+        Rectangle {
+            x: root.on ? 21px : 2px;
+            y: 2px;
+            width: 15px;
+            height: 15px;
+            border-radius: 7.5px;
+            background: root.on ? #e0483c : #5d6467;
+            animate x { duration: 110ms; easing: ease-out; }
+            animate background { duration: 110ms; }
+        }
+    }
+    Rectangle {
+        y: parent.height - 1px;
+        width: 100%;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.045);
+    }
+    TouchArea { mouse-cursor: pointer; clicked => { root.toggled(); } }
+}
+
+component SegDigit inherits Rectangle {
+    in property <int> digit: 0;
+    in property <color> ink: #2b362e;
+    width: 42px;
+    height: 93px;
+    background: transparent;
+
+    // 每个数字点亮的段
+    property <bool> sa: digit != 1 && digit != 4;
+    property <bool> sb: digit != 5 && digit != 6;
+    property <bool> sc: digit != 2;
+    property <bool> sd: digit != 1 && digit != 4 && digit != 7;
+    property <bool> se: digit == 0 || digit == 2 || digit == 6 || digit == 8;
+    property <bool> sf: digit == 0 || digit == 4 || digit == 5 || digit == 6 || digit == 8 || digit == 9;
+    property <bool> sg: digit == 2 || digit == 3 || digit == 4 || digit == 5 || digit == 6 || digit == 8 || digit == 9;
+
+    property <color> ghost: rgba(43, 54, 46, 0.10);
+
+    a := Path {
+        width: 100%; height: 100%;
+        viewbox-width: 42; viewbox-height: 93;
+        fill: root.sa ? root.ink : root.ghost;
+        commands: "M 9.83 0 L 32.17 0 L 35.7 4.19 L 32.17 8.37 L 9.83 8.37 L 6.3 4.19 Z";
+    }
+    b := Path {
+        width: 100%; height: 100%;
+        viewbox-width: 42; viewbox-height: 93;
+        fill: root.sb ? root.ink : root.ghost;
+        commands: "M 39.9 6.51 L 42 10.75 L 42 37.61 L 39.9 41.85 L 37.8 37.61 L 37.8 10.75 Z";
+    }
+    c := Path {
+        width: 100%; height: 100%;
+        viewbox-width: 42; viewbox-height: 93;
+        fill: root.sc ? root.ink : root.ghost;
+        commands: "M 39.9 51.15 L 42 55.39 L 42 82.25 L 39.9 86.49 L 37.8 82.25 L 37.8 55.39 Z";
+    }
+    d := Path {
+        width: 100%; height: 100%;
+        viewbox-width: 42; viewbox-height: 93;
+        fill: root.sd ? root.ink : root.ghost;
+        commands: "M 9.83 84.63 L 32.17 84.63 L 35.7 88.82 L 32.17 93 L 9.83 93 L 6.3 88.82 Z";
+    }
+    e := Path {
+        width: 100%; height: 100%;
+        viewbox-width: 42; viewbox-height: 93;
+        fill: root.se ? root.ink : root.ghost;
+        commands: "M 2.1 51.15 L 4.2 55.39 L 4.2 82.25 L 2.1 86.49 L 0 82.25 L 0 55.39 Z";
+    }
+    f := Path {
+        width: 100%; height: 100%;
+        viewbox-width: 42; viewbox-height: 93;
+        fill: root.sf ? root.ink : root.ghost;
+        commands: "M 2.1 6.51 L 4.2 10.75 L 4.2 37.61 L 2.1 41.85 L 0 37.61 L 0 10.75 Z";
+    }
+    g := Path {
+        width: 100%; height: 100%;
+        viewbox-width: 42; viewbox-height: 93;
+        fill: root.sg ? root.ink : root.ghost;
+        commands: "M 9.83 42.3 L 32.17 42.3 L 35.7 46.49 L 32.17 50.67 L 9.83 50.67 L 6.3 46.49 Z";
+    }
+}
+
+export component AppWindow inherits Window {
+    in-out property <[Station]> stations;
+    in property <[Chip]> navs;
+    in property <[Chip]> tags;
+    in property <[Chip]> regions;
+    in-out property <int> current: -1;
+    in-out property <string> query: "";
+    in property <string> list-title: "电台库";
+    in property <string> list-en: "MEMORY";
+    in property <string> list-sub: "正在连接目录…";
+    in property <string> lcd-name: "还没开始收听";
+    in property <string> lcd-meta: "FM 87.5–108 MHz · 网络调谐";
+    in property <string> lcd-status: "待机 STANDBY";
+    in property <string> lcd-mode: "FM";
+    in property <string> clock-text: "10:24";
+    in property <int> clock-d0: 0;
+    in property <int> clock-d1: 0;
+    in property <int> clock-d2: 0;
+    in property <int> clock-d3: 0;
+    in property <int> freq-d0: 0;
+    in property <int> freq-d1: 0;
+    in property <int> freq-d2: 0;
+    in property <int> freq-d3: 0;
+    in property <bool> playing: false;
+    in property <bool> loading: false;
+    in-out property <bool> muted: false;
+    in-out property <bool> link-open: false;
+    in-out property <string> link-name: "";
+    in-out property <string> link-url: "";
+    in-out property <bool> settings-open: false;
+    in-out property <bool> opt-autostart: true;
+    in-out property <bool> opt-autoplay: true;
+    in-out property <bool> opt-resume: true;
+    in-out property <bool> opt-shuffle: false;
+    in-out property <bool> opt-skip: true;
+    in property <int> volume: 70;
+    in property <image> grille;
+    in property <image> knob;
+    in property <string> total-label: "0 个电台";
+    in property <bool> online: true;
+    in property <bool> maxed: false;
+
+    callback win-minimize();
+    callback win-maximize();
+    callback win-close();
+    callback win-drag();
+    callback play-row(int);
+    callback set-query(string);
+    callback pick-tag(int);
+    callback pick-region(int);
+    callback pick-nav(int);
+    callback toggle-fav(int);
+    callback vol-adjust(int);
+    callback toggle-play();
+    callback toggle-mute();
+    callback prev-station();
+    callback next-station();
+    callback add-link(string, string);
+    callback close-link();
+    callback set-option(string, bool);
+
+    title: "AIRWAVE PL-680";
+    no-frame: true;
+    width: 1400px;
+    height: 900px;
+    background: #0a0b0c;
+
+    Rectangle {
+        x: 10px; y: 10px;
+        width: parent.width - 20px;
+        height: parent.height - 20px;
+        border-radius: maxed ? 0px : 10px;
+        border-width: 1px;
+        border-color: #070809;
+        background: @linear-gradient(180deg, #1c1f22 0%, #171a1d 46%, #131619 100%);
+        clip: true;
+
+        VerticalLayout {
+            spacing: 0px;
+
+            // ---------------- title bar ----------------
+            Rectangle {
+                height: 34px;
+                background: @linear-gradient(180deg, #101315 0%, #0c0f10 60%, #0a0c0d 100%);
+
+                TouchArea {
+                    pointer-event(e) => {
+                        if (e.kind == PointerEventKind.down && e.button == PointerEventButton.left) {
+                            root.win-drag();
+                        }
+                    }
+                    double-clicked => { root.win-maximize(); }
+                }
+
+                HorizontalLayout {
+                    padding-left: 14px;
+                    padding-right: 7px;
+                    spacing: 12px;
+                    cross-axis-alignment: center;
+
+                    HorizontalLayout {
+                        spacing: 7px;
+                        cross-axis-alignment: center;
+                        width: 132px;
+                        // 小收音机图标
+                        Rectangle {
+                            width: 13px; height: 13px;
+                            background: transparent;
+                            Rectangle { x: 1px; y: 5px; width: 11px; height: 7px; border-radius: 2px; border-width: 1.2px; border-color: #767d80; background: transparent; }
+                            Rectangle { x: 6px; y: 2px; width: 1.2px; height: 4px; background: #767d80; }
+                            Rectangle { x: 4.5px; y: 1.5px; width: 4px; height: 1.2px; background: #767d80; }
+                            Rectangle { x: 4px; y: 8.5px; width: 2px; height: 2px; border-radius: 1px; background: #767d80; }
+                        }
+                        Text {
+                            text: "AIRWAVE";
+                            color: #d9dcd7;
+                            font-family: "Segoe UI";
+                            font-weight: 900;
+                            font-size: 11px;
+                            letter-spacing: 2.6px;
+                            vertical-alignment: center;
+                        }
+                        Rectangle {
+                            width: pl.width + 8px;
+                            height: 12px;
+                            border-width: 1px;
+                            border-color: #5a2a24;
+                            border-radius: 1px;
+                            background: transparent;
+                            pl := Text {
+                                x: 4px; y: 1px;
+                                text: "PL-680";
+                                color: #cf5a4e;
+                                font-family: "JetBrains Mono";
+                                font-size: 6px;
+                                letter-spacing: 0.8px;
+                            }
+                        }
+                    }
+
+                    Rectangle {
+                        background: transparent;
+                        Text {
+                            text: "中国网络收音机 · PLL SYNTHESIZED RECEIVER";
+                            color: #565d60;
+                            font-family: "JetBrains Mono";
+                            font-size: 6.8px;
+                            letter-spacing: 2px;
+                            width: 100%;
+                            horizontal-alignment: center;
+                        }
+                    }
+
+                    HorizontalLayout {
+                        spacing: 4px;
+                        cross-axis-alignment: center;
+                        width: 104px;
+
+                        Rectangle {
+                            width: 32px; height: 22px;
+                            border-radius: 2px; border-width: 1px; border-color: #070809;
+                            background: @linear-gradient(180deg, #23272a 0%, #1a1e21 55%, #15181a 100%);
+                            ta-min := TouchArea { mouse-cursor: pointer; clicked => { root.win-minimize(); } }
+                            Rectangle { x: 11px; y: 10.4px; width: 10px; height: 1.2px; background: ta-min.has-hover ? #f1f2ec : #8d9497; }
+                        }
+                        Rectangle {
+                            width: 32px; height: 22px;
+                            border-radius: 2px; border-width: 1px; border-color: #070809;
+                            background: @linear-gradient(180deg, #23272a 0%, #1a1e21 55%, #15181a 100%);
+                            ta-max := TouchArea { mouse-cursor: pointer; clicked => { root.win-maximize(); } }
+                            Rectangle {
+                                x: 11px; y: 6.6px; width: 10px; height: 9px;
+                                border-radius: 1px;
+                                border-width: 1.2px;
+                                border-color: ta-max.has-hover ? #f1f2ec : #8d9497;
+                                background: transparent;
+                            }
+                        }
+                        Rectangle {
+                            width: 32px; height: 22px;
+                            border-radius: 2px; border-width: 1px;
+                            border-color: ta-close.has-hover ? #7d1d15 : #070809;
+                            background: ta-close.has-hover ? @linear-gradient(180deg, #e04a3d, #c33326 60%, #a22a1f) : @linear-gradient(180deg, #23272a 0%, #1a1e21 55%, #15181a 100%);
+                            ta-close := TouchArea { mouse-cursor: pointer; clicked => { root.win-close(); } }
+                            Text {
+                                x: 0; y: 0; width: 100%; height: 100%;
+                                text: "×";
+                                font-family: "Segoe UI";
+                                font-weight: 400;
+                                font-size: 14px;
+                                color: ta-close.has-hover ? #ffffff : #8d9497;
+                                horizontal-alignment: center;
+                                vertical-alignment: center;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ---------------- top bezel ----------------
+            Rectangle {
+                height: 52px;
+                background: @linear-gradient(180deg, #23272b 0%, #1a1d20 55%, #17191c 100%);
+
+                HorizontalLayout {
+                    padding-left: 18px;
+                    padding-right: 18px;
+                    spacing: 20px;
+                    cross-axis-alignment: center;
+
+                    // power bar
+                    HorizontalLayout {
+                        spacing: 10px;
+                        cross-axis-alignment: center;
+                        width: 120px;
+                        Rectangle {
+                            width: 78px; height: 19px;
+                            border-radius: 2px;
+                            border-width: 1px;
+                            border-color: #6f1913;
+                            background: @linear-gradient(180deg, #ef5548 0%, #d13a2e 46%, #a92a20 100%);
+                            ta-power := TouchArea { mouse-cursor: pointer; clicked => { root.toggle-play(); } }
+                            Rectangle {
+                                x: 12px; y: 8px; width: 54px; height: 2px;
+                                background: @linear-gradient(90deg, #d13a2e 0%, #ffffff 50%, #d13a2e 100%);
+                                opacity: ta-power.pressed ? 0.6 : 0.9;
+                            }
+                        }
+                        VerticalLayout {
+                            spacing: 1px;
+                            width: 26px;
+                            Text { text: "电源"; color: #8d9497; font-family: "JetBrains Mono"; font-size: 6px; letter-spacing: 1px; }
+                            Text { text: "POWER"; color: #5f6669; font-family: "JetBrains Mono"; font-size: 6px; letter-spacing: 0.8px; }
+                        }
+                    }
+
+                    // search
+                    Rectangle { horizontal-stretch: 1; background: transparent; }
+                    Rectangle {
+                        width: 440px;
+                        height: 30px;
+                        border-radius: 3px;
+                        border-width: 1px;
+                        border-color: si.has-focus ? #414a43 : #050607;
+                        background: si.has-focus ? #101315 : #0d0f11;
+                        HorizontalLayout {
+                            padding-left: 9px;
+                            padding-right: 9px;
+                            spacing: 8px;
+                            cross-axis-alignment: center;
+                            Rectangle {
+                                width: 34px; height: 15px;
+                                border-width: 1px; border-color: #4a221d; border-radius: 1px;
+                                background: transparent;
+                                Text {
+                                    text: "SCAN"; color: #ff6a5d; font-family: "JetBrains Mono"; font-size: 6.5px;
+                                    horizontal-alignment: center; vertical-alignment: center;
+                                    width: 100%; height: 100%;
+                                }
+                            }
+                            Rectangle {
+                                horizontal-stretch: 1;
+                                height: 100%;
+                                background: transparent;
+                                Text {
+                                    visible: root.query == "";
+                                    width: 100%; height: 100%;
+                                    text: "搜索电台 / 城市 / 频段";
+                                    color: #5b6265;
+                                    font-size: 11px;
+                                    vertical-alignment: center;
+                                }
+                                si := TextInput {
+                                    width: 100%; height: 100%;
+                                    font-family: "Segoe UI";
+                                    font-size: 11px;
+                                    color: #e6e9e6;
+                                    vertical-alignment: center;
+                                    single-line: true;
+                                    text: root.query;
+                                    edited => { root.set-query(si.text); }
+                                    accepted => { root.play-row(0); }
+                                }
+                            }
+                            Rectangle {
+                                visible: root.query != "";
+                                width: 14px; height: 14px;
+                                border-radius: 7px;
+                                background: #23282b;
+                                Text {
+                                    text: "×"; color: #9aa1a3; font-size: 10px;
+                                    width: 100%; height: 100%;
+                                    horizontal-alignment: center; vertical-alignment: center;
+                                }
+                                TouchArea { clicked => { root.set-query(""); si.text = ""; } }
+                            }
+                            Rectangle {
+                                width: 16px; height: 15px;
+                                border-width: 1px; border-color: #2a2f31; border-radius: 2px;
+                                background: transparent;
+                                Text {
+                                    text: "/";
+                                    color: #6b7275;
+                                    font-family: "JetBrains Mono";
+                                    font-size: 8px;
+                                    width: 100%; height: 100%;
+                                    horizontal-alignment: center;
+                                    vertical-alignment: center;
+                                }
+                            }
+                        }
+                    }
+
+                    // right: conn + brand
+                    Rectangle { horizontal-stretch: 1; background: transparent; }
+                    HorizontalLayout {
+                        spacing: 16px;
+                        cross-axis-alignment: center;
+                        width: 236px;
+                        Rectangle {
+                            width: 64px; height: 10px;
+                            background: transparent;
+                            Rectangle {
+                                x: 0; y: 3px; width: 4px; height: 4px; border-radius: 2px;
+                                background: root.online ? #9dc59a : #e0483c;
+                            }
+                            Text {
+                                x: 8px; y: -2px;
+                                text: root.online ? "在线" : "离线";
+                                color: #8a9194;
+                                font-family: "JetBrains Mono";
+                                font-size: 7.5px;
+                            }
+                        }
+                        VerticalLayout {
+                            spacing: 2px;
+                            Text {
+                                text: "AIRWAVE";
+                                color: #f5f5ef;
+                                font-family: "Segoe UI";
+                                font-weight: 800;
+                                font-size: 21px;
+                                letter-spacing: 3px;
+                                horizontal-alignment: right;
+                                width: 100%;
+                            }
+                            Text {
+                                text: "PL-680 · PLL SYNTHESIZED RECEIVER";
+                                color: #848b8e;
+                                font-family: "JetBrains Mono";
+                                font-size: 5.8px;
+                                letter-spacing: 1px;
+                                horizontal-alignment: right;
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ---------------- body ----------------
+            HorizontalLayout {
+                spacing: 0px;
+
+                // sidebar
+                Rectangle {
+                    width: 248px;
+                    background: @linear-gradient(180deg, #1b1e21 0%, #16191b 60%, #14171a 100%);
+                    VerticalLayout {
+                        padding-left: 12px;
+                        padding-right: 12px;
+                        padding-top: 13px;
+                        padding-bottom: 10px;
+                        spacing: 0px;
+
+                        HorizontalLayout {
+                            height: 11px;
+                            spacing: 7px;
+                            cross-axis-alignment: center;
+                            Rectangle { width: 4px; height: 4px; background: #e0483c; }
+                            Text {
+                                text: "浏览";
+                                color: #c4c9c9;
+                                font-size: 9px;
+                                font-weight: 600;
+                                letter-spacing: 1.2px;
+                                vertical-alignment: center;
+                            }
+                            Text {
+                                text: "BROWSE";
+                                color: #ff6a5d;
+                                opacity: 0.9;
+                                font-family: "JetBrains Mono";
+                                font-size: 5.8px;
+                                letter-spacing: 1px;
+                                vertical-alignment: center;
+                            }
+                        }
+                        Rectangle { height: 7px; }
+
+                        VerticalLayout {
+                            spacing: 3px;
+                            for n[i] in root.navs : Rectangle {
+                                height: 32px;
+                                border-radius: 3px;
+                                border-width: 1px;
+                                border-color: n.on ? #6b2b24 : #101214;
+                                background: n.on ? @linear-gradient(90deg, #3a1b18 0%, #221413 80%) : @linear-gradient(180deg, #1e2124, #191c1f);
+                                Rectangle { x: 0px; y: 5px; width: 2px; height: 22px; background: n.on ? #e0483c : transparent; }
+                                Rectangle {
+                                    x: 10px; y: 13.5px; width: 5px; height: 5px;
+                                    border-radius: 2.5px;
+                                    background: n.on ? #e0483c : #34393c;
+                                }
+                                Text {
+                                    x: 22px; y: 0; height: parent.height;
+                                    text: n.label;
+                                    color: n.on ? #f0d9d4 : #c2c7c7;
+                                    font-size: 11.5px;
+                                    vertical-alignment: center;
+                                }
+                                Text {
+                                    x: parent.width - 46px; y: 0; width: 38px; height: parent.height;
+                                    text: n.c;
+                                    color: n.on ? #e08a7e : #6f7679;
+                                    font-family: "JetBrains Mono";
+                                    font-size: 8.5px;
+                                    horizontal-alignment: right;
+                                    vertical-alignment: center;
+                                }
+                                TouchArea { mouse-cursor: pointer; clicked => { root.pick-nav(i); } }
+                            }
+                        }
+
+                        Rectangle { height: 16px; }
+                        HorizontalLayout {
+                            height: 11px;
+                            spacing: 7px;
+                            cross-axis-alignment: center;
+                            Rectangle { width: 4px; height: 4px; background: #e0483c; }
+                            Text {
+                                text: "分类";
+                                color: #c4c9c9;
+                                font-size: 9px;
+                                font-weight: 600;
+                                letter-spacing: 1.2px;
+                                vertical-alignment: center;
+                            }
+                            Text {
+                                text: "BAND";
+                                color: #ff6a5d;
+                                opacity: 0.9;
+                                font-family: "JetBrains Mono";
+                                font-size: 5.8px;
+                                letter-spacing: 1px;
+                                vertical-alignment: center;
+                            }
+                        }
+                        Rectangle { height: 7px; }
+                        FlexboxLayout { spacing: 5px; flex-wrap: wrap; vertical-stretch: 0; cross-axis-line-alignment: start;
+                            for c[i] in root.tags : Rectangle {
+                                height: 23px;
+                                width: tag-text.width + 16px;
+                                border-radius: 3px;
+                                border-width: 1px;
+                                border-color: c.on ? #7a3a32 : #0a0c0d;
+                                background: c.on ? @linear-gradient(180deg, #4a2622, #2a1817) : @linear-gradient(180deg, #23272a, #1a1d20);
+                                tag-text := Text {
+                                    x: 8px; y: 0; height: parent.height;
+                                    text: c.label;
+                                    color: c.on ? #ffb0a7 : #a9afb0;
+                                    font-size: 10.5px;
+                                    vertical-alignment: center;
+                                }
+                                TouchArea {
+                                    mouse-cursor: pointer;
+                                    clicked => { root.pick-tag(i); }
+                                }
+                            }
+                        }
+
+                        Rectangle { height: 16px; }
+                        HorizontalLayout {
+                            height: 11px;
+                            spacing: 7px;
+                            cross-axis-alignment: center;
+                            Rectangle { width: 4px; height: 4px; background: #e0483c; }
+                            Text {
+                                text: "地方";
+                                color: #c4c9c9;
+                                font-size: 9px;
+                                font-weight: 600;
+                                letter-spacing: 1.2px;
+                                vertical-alignment: center;
+                            }
+                            Text {
+                                text: "AREA";
+                                color: #ff6a5d;
+                                opacity: 0.9;
+                                font-family: "JetBrains Mono";
+                                font-size: 5.8px;
+                                letter-spacing: 1px;
+                                vertical-alignment: center;
+                            }
+                        }
+                        Rectangle { height: 7px; }
+                        FlexboxLayout { spacing: 5px; flex-wrap: wrap; vertical-stretch: 0; cross-axis-line-alignment: start;
+                            for c[i] in root.regions : Rectangle {
+                                height: 23px;
+                                width: region-text.width + 20px;
+                                border-radius: 3px;
+                                border-width: 1px;
+                                border-color: c.on ? #7a3a32 : #0a0c0d;
+                                background: c.on ? @linear-gradient(180deg, #4a2622, #2a1817) : @linear-gradient(180deg, #23272a, #1a1d20);
+                                region-text := Text {
+                                    x: 8px; y: 0; height: parent.height;
+                                    text: c.label + "  " + c.c;
+                                    color: c.on ? #ffb0a7 : #a9afb0;
+                                    font-size: 10.5px;
+                                    vertical-alignment: center;
+                                }
+                                TouchArea {
+                                    mouse-cursor: pointer;
+                                    clicked => { root.pick-region(i); }
+                                }
+                            }
+                        }
+
+                        Rectangle { vertical-stretch: 1; }
+    
+                        // 底部固定：添加直链 + 印字
+                        Rectangle {
+                            height: 82px;
+                            width: 100%;
+                            background: transparent;
+                            Rectangle {
+                                width: 100%; height: 31px;
+                                border-radius: 3px;
+                                border-width: 1px;
+                                border-color: #0d0f10;
+                                background: touch.has-hover ? @linear-gradient(180deg, #2a2f33, #1e2225) : @linear-gradient(180deg, #23272a, #1a1d20);
+                                touch := TouchArea { clicked => { root.link-open = true; } }
+                                Text {
+                                    text: "+ 添加直链电台";
+                                    color: #b9bfbe;
+                                    font-size: 10.5px;
+                                    width: 100%; height: 100%;
+                                    horizontal-alignment: center;
+                                    vertical-alignment: center;
+                                }
+                            }
+                            Rectangle { y: 43px; width: 100%; height: 1px; background: rgba(255,255,255,0.045); }
+                            Text {
+                                x: 0; y: 52px; width: 100%; height: 10px;
+                                text: "FM 87.5–108 MHz"; color: #5b6265;
+                                font-family: "JetBrains Mono"; font-size: 6.2px; letter-spacing: 0.8px;
+                                vertical-alignment: center;
+                            }
+                            Text {
+                                x: 0; y: 62px; width: 100%; height: 10px;
+                                text: "MW 522–1620 kHz"; color: #5b6265;
+                                font-family: "JetBrains Mono"; font-size: 6.2px; letter-spacing: 0.8px;
+                                vertical-alignment: center;
+                            }
+                            Text {
+                                x: 0; y: 72px; width: 100%; height: 10px;
+                                text: "PLL · 09 收藏快捷搜"; color: #5b6265;
+                                font-family: "JetBrains Mono"; font-size: 6.2px; letter-spacing: 0.8px;
+                                vertical-alignment: center;
+                            }
+                        }
+                    }
+                }
+
+                // main
+                VerticalLayout {
+                    padding-left: 16px;
+                    padding-right: 16px;
+                    padding-top: 12px;
+                    spacing: 12px;
+
+                    // deck
+                    Rectangle {
+                        height: 369px;
+                        border-radius: 8px;
+                        border-width: 1px;
+                        border-color: #090b0c;
+                        background: @linear-gradient(180deg, #1c1f22, #16191c 70%, #14171a);
+                        HorizontalLayout {
+                            spacing: 0px;
+                            padding: 0px;
+
+                            // speaker
+                            Rectangle {
+                                width: 560px;
+                                background: transparent;
+                                VerticalLayout {
+                                    padding-left: 15px;
+                                    padding-right: 15px;
+                                    padding-top: 13px;
+                                    padding-bottom: 11px;
+                                    spacing: 10px;
+                                    Rectangle {
+                                        vertical-stretch: 1;
+                                        border-radius: 4px;
+                                        border-width: 1px;
+                                        border-color: #050606;
+                                        background: @linear-gradient(180deg, #15181a, #101214);
+                                        Image {
+                                            image-fit: cover;
+                                            source: root.grille;
+                                            width: 100%;
+                                            height: 100%;
+                                        }
+                                    }
+                                    HorizontalLayout {
+                                        height: 44px;
+                                        VerticalLayout {
+                                            spacing: 3px;
+                                            Text {
+                                                text: "PL-680";
+                                                color: #f5f5ef;
+                                                font-family: "Segoe UI";
+                                                font-weight: 700;
+                                                font-size: 34px;
+                                                letter-spacing: 0.5px;
+                                                vertical-alignment: bottom;
+                                            }
+                                            Rectangle {
+                                                width: 100px; height: 12px;
+                                                border-radius: 1px;
+                                                background: @linear-gradient(180deg, #c33a2e, #97271e);
+                                                Text {
+                                                    x: 5px; y: 1px;
+                                                    text: "PLL SYNTHESIZED RECEIVER";
+                                                    color: #f4e9e4;
+                                                    font-family: "JetBrains Mono";
+                                                    font-size: 6.2px;
+                                                    letter-spacing: 0.8px;
+                                                }
+                                            }
+                                        }
+                                        VerticalLayout {
+                                            spacing: 4px;
+                                            cross-axis-alignment: end;
+                                            Text {
+                                                text: "FM STEREO / LW / MW / SW SSB / AIR";
+                                                color: #a7adae;
+                                                font-family: "JetBrains Mono";
+                                                font-size: 6.2px;
+                                                horizontal-alignment: right;
+                                                width: 100%;
+                                            }
+                                            Text {
+                                                text: "AIRWAVE";
+                                                color: #dfe2dd;
+                                                font-family: "Segoe UI";
+                                                font-weight: 800;
+                                                font-size: 14px;
+                                                letter-spacing: 3px;
+                                                horizontal-alignment: right;
+                                                width: 100%;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            // electronics
+                            VerticalLayout {
+                                padding-left: 14px;
+                                padding-right: 14px;
+                                padding-top: 12px;
+                                padding-bottom: 9px;
+                                spacing: 9px;
+
+                                // LCD bezel
+                                Rectangle {
+                                    vertical-stretch: 1;
+                                    border-radius: 5px;
+                                    border-width: 1px;
+                                    border-color: #040505;
+                                    background: #0a0c0d;
+                                    VerticalLayout {
+                                        alignment: stretch;
+                                        padding: 7px;
+                                        Rectangle {
+                                            vertical-stretch: 1;
+                                            border-radius: 2px;
+                                            background: @linear-gradient(180deg, #bdc7b8 0%, #aab5a4 46%, #97a291 100%);
+                                            VerticalLayout {
+                                                alignment: space-between;
+                                                padding-left: 12px;
+                                                padding-right: 12px;
+                                                padding-top: 8px;
+                                                padding-bottom: 7px;
+                                                spacing: 2px;
+
+                                                HorizontalLayout {
+                                                    spacing: 9px;
+                                                    height: 24px;
+                                                    cross-axis-alignment: center;
+                                                    Rectangle {
+                                                        width: 23px; height: 18px;
+                                                        background: transparent;
+                                                        Rectangle { x: 0px;  y: 13px; width: 3px; height: 5px;  background: root.playing ? #2b362e : #b6c0b2; }
+                                                        Rectangle { x: 5px;  y: 11px; width: 3px; height: 7px;  background: root.playing ? #2b362e : #b6c0b2; }
+                                                        Rectangle { x: 10px; y: 9px;  width: 3px; height: 9px;  background: root.playing ? #2b362e : #b6c0b2; }
+                                                        Rectangle { x: 15px; y: 6px;  width: 3px; height: 12px; background: root.playing ? #2b362e : #b6c0b2; }
+                                                        Rectangle { x: 20px; y: 2px;  width: 3px; height: 16px; background: root.playing ? #2b362e : #b6c0b2; }
+                                                    }
+                                                    Rectangle {
+                                                        width: 31px; height: 12px;
+                                                        border-width: 1px;
+                                                        border-color: rgba(43, 54, 46, 0.35);
+                                                        border-radius: 1px;
+                                                        background: transparent;
+                                                        Text {
+                                                            text: "STEREO";
+                                                            color: #2b362e;
+                                                            font-family: "JetBrains Mono";
+                                                            font-size: 6.4px;
+                                                            letter-spacing: 0.9px;
+                                                            width: 100%; height: 100%;
+                                                            horizontal-alignment: center;
+                                                            vertical-alignment: center;
+                                                        }
+                                                    }
+                                                    Text {
+                                                        text: root.lcd-status;
+                                                        color: #3f4c43;
+                                                        font-family: "JetBrains Mono";
+                                                        font-size: 7.4px;
+                                                        letter-spacing: 1px;
+                                                        vertical-alignment: center;
+                                                    }
+                                                    Rectangle { horizontal-stretch: 1; }
+                                                    HorizontalLayout {
+                                                        spacing: 2px;
+                                                        cross-axis-alignment: end;
+                                                        width: 66px;
+                                                        alignment: end;
+                                                        SegDigit { width: 11px; height: 24px; digit: root.clock-d0; ink: rgba(43, 54, 46, 0.46); }
+                                                        SegDigit { width: 11px; height: 24px; digit: root.clock-d1; ink: rgba(43, 54, 46, 0.46); }
+                                                        Rectangle {
+                                                            width: 5px; height: 24px;
+                                                            background: transparent;
+                                                            Rectangle { x: 1px; y: 8px; width: 3px; height: 3px; border-radius: 2px; background: rgba(43, 54, 46, 0.46); }
+                                                            Rectangle { x: 1px; y: 15px; width: 3px; height: 3px; border-radius: 2px; background: rgba(43, 54, 46, 0.46); }
+                                                        }
+                                                        SegDigit { width: 11px; height: 24px; digit: root.clock-d2; ink: rgba(43, 54, 46, 0.46); }
+                                                        SegDigit { width: 11px; height: 24px; digit: root.clock-d3; ink: rgba(43, 54, 46, 0.46); }
+                                                    }
+                                                }
+
+                                                HorizontalLayout {
+                                                    spacing: 12px;
+                                                    cross-axis-alignment: end;
+                                                    HorizontalLayout {
+                                                        spacing: 3px;
+                                                        width: 200px;
+                                                        SegDigit { digit: root.freq-d0; }
+                                                        SegDigit { digit: root.freq-d1; }
+                                                        Rectangle {
+                                                            width: 16px; height: 93px;
+                                                            background: transparent;
+                                                            Rectangle {
+                                                                x: 6px; y: 84px;
+                                                                width: 4px; height: 4px;
+                                                                border-radius: 2px;
+                                                                background: #2b362e;
+                                                                visible: root.lcd-mode == "FM";
+                                                            }
+                                                        }
+                                                        SegDigit { digit: root.freq-d2; }
+                                                        SegDigit { digit: root.freq-d3; }
+                                                    }
+                                                    Rectangle { horizontal-stretch: 1; }
+                                                    VerticalLayout {
+                                                        width: 250px;
+                                                        spacing: 3px;
+                                                        padding-bottom: 4px;
+                                                        Text {
+                                                            text: root.lcd-name;
+                                                            color: #253028;
+                                                            font-size: 12.5px;
+                                                            font-weight: 600;
+                                                            horizontal-alignment: right;
+                                                            width: 100%;
+                                                            overflow: elide;
+                                                        }
+                                                        Text {
+                                                            text: root.lcd-meta;
+                                                            color: #4b573f;
+                                                            font-family: "JetBrains Mono";
+                                                            font-size: 8px;
+                                                            horizontal-alignment: right;
+                                                            width: 100%;
+                                                            overflow: elide;
+                                                        }
+                                                    }
+                                                }
+
+                                                HorizontalLayout {
+                                                    height: 17px;
+                                                    cross-axis-alignment: center;
+                                                    Rectangle {
+                                                        width: 28px; height: 15px;
+                                                        border-width: 1px; border-color: #7d887a; border-radius: 1px;
+                                                        background: transparent;
+                                                        Text {
+                                                            text: root.lcd-mode;
+                                                            color: #2b362e;
+                                                            font-family: "JetBrains Mono";
+                                                            font-size: 9px;
+                                                            font-weight: 700;
+                                                            width: 100%; height: 100%;
+                                                            horizontal-alignment: center;
+                                                            vertical-alignment: center;
+                                                        }
+                                                    }
+                                                    Rectangle { horizontal-stretch: 1; }
+                                                    Text {
+                                                        text: "FM 87.5–108 · MW 522–1620";
+                                                        color: #4b573f;
+                                                        font-family: "JetBrains Mono";
+                                                        font-size: 6.6px;
+                                                        vertical-alignment: center;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                // keys
+                                HorizontalLayout {
+                                    spacing: 10px;
+                                    height: 146px;
+
+                                    VerticalLayout {
+                                        spacing: 2px;
+                                        width: 350px;
+                                        HorizontalLayout {
+                                            spacing: 22px;
+                                            VerticalLayout {
+                                                spacing: 2px;
+                                                width: 198px;
+                                                HorizontalLayout {
+                                                    spacing: 6px;
+                                                    KeyUnit { hint: "[M1]"; label: "1"; tapped => { root.play-row(0); } }
+                                                    KeyUnit { hint: "[M2]"; label: "2"; tapped => { root.play-row(1); } }
+                                                    KeyUnit { hint: "[M3]"; label: "3"; tapped => { root.play-row(2); } }
+                                                }
+                                                HorizontalLayout {
+                                                    spacing: 6px;
+                                                    KeyUnit { hint: "[M4]"; label: "4"; tapped => { root.play-row(3); } }
+                                                    KeyUnit { hint: "[M5]"; label: "5"; tapped => { root.play-row(4); } }
+                                                    KeyUnit { hint: "[M6]"; label: "6"; tapped => { root.play-row(5); } }
+                                                }
+                                                HorizontalLayout {
+                                                    spacing: 6px;
+                                                    KeyUnit { hint: "[M7]"; label: "7"; tapped => { root.play-row(6); } }
+                                                    KeyUnit { hint: "[M8]"; label: "8"; tapped => { root.play-row(7); } }
+                                                    KeyUnit { hint: "[M9]"; label: "9"; tapped => { root.play-row(8); } }
+                                                }
+                                            }
+                                            VerticalLayout {
+                                                spacing: 2px;
+                                                width: 130px;
+                                                HorizontalLayout {
+                                                    spacing: 6px;
+                                                    KeyUnit { hint: "[音量−]"; label: "−"; tapped => { root.vol-adjust(-5); } }
+                                                    KeyUnit { hint: "[音量+]"; label: "+"; tapped => { root.vol-adjust(5); } }
+                                                }
+                                                HorizontalLayout {
+                                                    spacing: 6px;
+                                                    KeyUnit { hint: "[上一台]"; label: "<<"; tapped => { root.prev-station(); } }
+                                                    KeyUnit { hint: "[下一台]"; label: ">>"; tapped => { root.next-station(); } }
+                                                }
+                                                KeyUnit { hint: "[收藏当前台]"; label: "★"; kw: 130px; tapped => { if (root.current >= 0) { root.toggle-fav(root.current); } } }
+                                            }
+                                        }
+                                        KeyUnit { hint: "[播放/暂停]"; label: root.playing ? "|| PAUSE" : "> PLAY"; kw: 350px; active: root.playing; tapped => { root.toggle-play(); } }
+                                    }
+
+                                    VerticalLayout {
+                                        spacing: 4px;
+                                        width: 54px;
+                                        KeyLabel { text: "[音量 VOL]"; width: 100%; }
+                                        Image {
+                                            width: 46px; height: 46px;
+                                            source: root.knob;
+                                        }
+                                        Text {
+                                            text: root.volume;
+                                            color: #8d9497;
+                                            font-family: "JetBrains Mono";
+                                            font-size: 8px;
+                                            horizontal-alignment: center;
+                                            width: 100%;
+                                        }
+                                    }
+
+                                    VerticalLayout {
+                                        spacing: 2px;
+                                        width: 62px;
+                                        KeyUnit { hint: "[静音]"; label: "MUTE"; active: root.muted; tapped => { root.toggle-mute(); } }
+                                        Rectangle { height: 6px; }
+                                        KeyUnit { hint: "[设置]"; label: "SET"; active: root.settings-open; tapped => { root.settings-open = true; } }
+                                        Rectangle { vertical-stretch: 1; }
+                                        Text {
+                                            text: root.playing ? "● ON AIR" : "○ STANDBY";
+                                            color: root.playing ? #cf5a4e : #4c5254;
+                                            font-family: "JetBrains Mono";
+                                            font-size: 6.4px;
+                                            horizontal-alignment: center;
+                                            width: 100%;
+                                        }
+                                    }
+                                }
+
+                                Rectangle {
+                                    height: 14px;
+                                    background: transparent;
+                                    Rectangle { y: 0px; width: 100%; height: 1px; background: rgba(255,255,255,0.04); }
+                                    HorizontalLayout {
+                                        padding-top: 7px;
+                                        Text { text: "DIRECT KEY IN"; color: #787f82; font-family: "JetBrains Mono"; font-size: 6.1px; letter-spacing: 1px; vertical-alignment: center; }
+                                        Rectangle { horizontal-stretch: 1; }
+                                        Text { text: "1–9 直选 · ← → 换台 · 空格 播放"; color: #5f6669; font-family: "JetBrains Mono"; font-size: 6.1px; letter-spacing: 1px; vertical-alignment: center; }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // list
+                    Rectangle {
+                        vertical-stretch: 1;
+                        border-radius: 8px;
+                        border-width: 1px;
+                        border-color: #090b0c;
+                        background: @linear-gradient(180deg, #1a1d20, #15181b);
+                        VerticalLayout {
+                            padding-left: 12px;
+                            padding-right: 12px;
+                            padding-top: 9px;
+
+                            HorizontalLayout {
+                                padding-left: 4px;
+                                padding-right: 4px;
+                                padding-bottom: 7px;
+                                spacing: 10px;
+                                Text {
+                                    text: root.list-title;
+                                    color: #dde0db;
+                                    font-size: 10.5px;
+                                    font-weight: 600;
+                                    letter-spacing: 1.6px;
+                                }
+                                Text {
+                                    text: root.list-en;
+                                    color: #ff6a5d;
+                                    font-family: "JetBrains Mono";
+                                    font-size: 6.8px;
+                                    letter-spacing: 1px;
+                                    vertical-alignment: bottom;
+                                }
+                                Text {
+                                    text: root.list-sub;
+                                    color: #7b8285;
+                                    font-size: 9.5px;
+                                    vertical-alignment: bottom;
+                                }
+                                Text {
+                                    text: "PLL · 100 CH";
+                                    color: #5f6669;
+                                    font-family: "JetBrains Mono";
+                                    font-size: 6.4px;
+                                    letter-spacing: 1px;
+                                    horizontal-alignment: right;
+                                    width: 100%;
+                                    vertical-alignment: bottom;
+                                }
+                            }
+
+                            Rectangle { height: 1px; background: #24282b; }
+
+                            lv := ListView {
+                                for s[i] in root.stations : Rectangle {
+                                    height: 48px;
+                                    width: lv.content-width;
+                                    background: i == root.current ? @linear-gradient(90deg, #33201e 0%, #1a1d20 55%) : transparent;
+
+                                    TouchArea {
+                                        mouse-cursor: pointer;
+                                        clicked => { root.play-row(i); }
+                                    }
+
+                                    // 序号
+                                    Text {
+                                        x: 0; y: 0; width: 27px; height: 48px;
+                                        text: s.code;
+                                        color: i == root.current ? #c6d1c2 : #5c6366;
+                                        font-family: "JetBrains Mono";
+                                        font-size: 8px;
+                                        horizontal-alignment: center;
+                                        vertical-alignment: center;
+                                    }
+                                    // 指示点
+                                    Rectangle {
+                                        x: 43px; y: 22px; width: 4px; height: 4px; border-radius: 2px;
+                                        background: i == root.current ? #e0483c : #3a3f42;
+                                    }
+                                    // 名称 + 元信息
+                                    VerticalLayout {
+                                        x: 58px; y: 8px;
+                                        width: lv.content-width - 190px;
+                                        spacing: 1px;
+                                        Text {
+                                            text: s.name;
+                                            color: i == root.current ? #f4f5ef : #e2e5df;
+                                            font-size: 13px;
+                                            overflow: elide;
+                                            width: 100%;
+                                        }
+                                        HorizontalLayout {
+                                            spacing: 5px;
+                                            alignment: start;
+                                            Text {
+                                                text: s.area;
+                                                color: #a08d88;
+                                                font-size: 10px;
+                                            }
+                                            Text {
+                                                text: "·";
+                                                color: #7d8487;
+                                                font-size: 10px;
+                                            }
+                                            Text {
+                                                text: s.tagline;
+                                                color: #7d8487;
+                                                font-size: 10px;
+                                                overflow: elide;
+                                            }
+                                        }
+                                    }
+                                    // badge
+                                    Rectangle {
+                                        x: lv.content-width - 96px; y: 15px;
+                                        width: badge-text.width + 10px;
+                                        height: 18px;
+                                        border-radius: 2px;
+                                        border-width: 1px;
+                                        border-color: s.hls ? #4a2622 : #23282a;
+                                        background: #121416;
+                                        badge-text := Text {
+                                            x: 5px; y: 0; height: 18px;
+                                            text: s.codec;
+                                            color: s.hls ? #d3a08f : #7d8487;
+                                            font-family: "JetBrains Mono";
+                                            font-size: 7.5px;
+                                            vertical-alignment: center;
+                                        }
+                                    }
+                                    // 星标
+                                    Rectangle {
+                                        x: lv.content-width - 32px; y: 13px;
+                                        width: 22px; height: 22px;
+                                        background: transparent;
+                                        Text {
+                                            text: s.fav ? "★" : "☆";
+                                            color: s.fav ? #ff6a5d : #6f7679;
+                                            font-size: 12px;
+                                            width: 100%; height: 100%;
+                                            horizontal-alignment: center;
+                                            vertical-alignment: center;
+                                        }
+                                        TouchArea { mouse-cursor: pointer; clicked => { root.toggle-fav(i); } }
+                                    }
+                                    // 底部分隔线
+                                    Rectangle {
+                                        x: 0; y: 47px; width: 100%; height: 1px;
+                                        background: i == root.current ? #3a2624 : #1f2326;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // ---------------- status bar ----------------
+            Rectangle {
+                height: 28px;
+                background: #101214;
+                HorizontalLayout {
+                    padding-left: 16px;
+                    padding-right: 16px;
+                    spacing: 9px;
+                    cross-axis-alignment: center;
+                    Text { text: "AIRWAVE PL-680"; color: #aeb4b3; font-family: "JetBrains Mono"; font-size: 7.4px; letter-spacing: 1px; }
+                    Text { text: "·"; color: #6f7679; font-family: "JetBrains Mono"; font-size: 7.4px; }
+                    Rectangle { width: 4px; height: 4px; border-radius: 2px; background: root.online ? #9dc59a : #e0483c; }
+                    Text { text: "radio-browser.info"; color: #6f7679; font-family: "JetBrains Mono"; font-size: 7.4px; }
+                    Text { text: "·"; color: #6f7679; font-family: "JetBrains Mono"; font-size: 7.4px; }
+                    Text { text: root.total-label; color: #6f7679; font-family: "JetBrains Mono"; font-size: 7.4px; }
+                    Rectangle { width: 100%; height: 1px; background: transparent; }
+                    Text { text: "1–9 直选 · ← → 换台 · 空格 播放 · F 收藏 · S 设置"; color: #666d70; font-family: "JetBrains Mono"; font-size: 7px; }
+                }
+            }
+        }
+    }
+
+    // 快捷键
+    FocusScope {
+        x: 0; y: 0; width: 100%; height: 100%;
+        init => { self.focus(); }
+        key-pressed(e) => {
+            if (e.text == Key.LeftArrow) { root.prev-station(); return accept; }
+            if (e.text == Key.RightArrow) { root.next-station(); return accept; }
+            if (e.text == Key.Space) { root.toggle-play(); return accept; }
+            if (root.link-open && e.text == Key.Escape) { root.link-open = false; return accept; }
+            if (root.link-open) { return reject; }
+            if (root.settings-open && e.text == Key.Escape) { root.settings-open = false; return accept; }
+            if (root.settings-open) { return reject; }
+            if (e.text == "s" || e.text == "S") { root.settings-open = true; return accept; }
+            if (e.text == "1") { root.play-row(0); return accept; }
+            if (e.text == "2") { root.play-row(1); return accept; }
+            if (e.text == "3") { root.play-row(2); return accept; }
+            if (e.text == "4") { root.play-row(3); return accept; }
+            if (e.text == "5") { root.play-row(4); return accept; }
+            if (e.text == "6") { root.play-row(5); return accept; }
+            if (e.text == "7") { root.play-row(6); return accept; }
+            if (e.text == "8") { root.play-row(7); return accept; }
+            if (e.text == "9") { root.play-row(8); return accept; }
+            if (e.text == "0" || e.text == "m" || e.text == "M") { root.toggle-mute(); return accept; }
+            if (e.text == "f" || e.text == "F") {
+                if (root.current >= 0) { root.toggle-fav(root.current); }
+                return accept;
+            }
+            reject
+        }
+    }
+
+    // 添加直链弹窗
+    Rectangle {
+        visible: root.link-open;
+        x: 0; y: 0; width: 100%; height: 100%;
+        background: rgba(4, 5, 6, 0.62);
+        TouchArea { clicked => { root.link-open = false; } }
+
+        Rectangle {
+            width: 392px;
+            height: 208px;
+            x: (parent.width - self.width) / 2;
+            y: (parent.height - self.height) / 2;
+            border-radius: 9px;
+            border-width: 1px;
+            border-color: #0a0c0d;
+            background: @linear-gradient(180deg, #1f2327, #15181b);
+            drop-shadow-blur: 30px;
+            drop-shadow-color: #000000aa;
+            drop-shadow-offset-y: 10px;
+            VerticalLayout {
+                padding-left: 16px;
+                padding-right: 16px;
+                padding-top: 14px;
+                padding-bottom: 14px;
+                spacing: 9px;
+
+                HorizontalLayout {
+                    Text {
+                        text: "添加直链电台";
+                        color: #d9ddda;
+                        font-size: 12px;
+                        font-weight: 600;
+                        vertical-alignment: center;
+                    }
+                    Rectangle { horizontal-stretch: 1; }
+                    Text {
+                        text: "DIRECT LINK";
+                        color: #8a3a33;
+                        font-family: "JetBrains Mono";
+                        font-size: 6.6px;
+                        letter-spacing: 1.2px;
+                        vertical-alignment: center;
+                    }
+                }
+                Text {
+                    text: "支持 http/https 的 mp3 / aac / m3u8 直播地址";
+                    color: #6b7275;
+                    font-size: 9.5px;
+                }
+                Rectangle {
+                    height: 28px;
+                    border-width: 1px;
+                    border-radius: 3px;
+                    border-color: ln.has-focus ? #414a43 : #0b0d0e;
+                    background: #0d0f11;
+                    ln := TextInput {
+                        x: 9px; y: 0px;
+                        width: parent.width - 18px;
+                        height: parent.height;
+                        color: #e6e9e6;
+                        font-size: 10.5px;
+                        vertical-alignment: center;
+                        single-line: true;
+                        edited => { root.link-name = ln.text; }
+                    }
+                    Text {
+                        visible: ln.text == "";
+                        x: 9px; y: 0px;
+                        width: parent.width - 18px;
+                        height: parent.height;
+                        text: "名称（可留空）";
+                        color: #565d60;
+                        font-size: 10.5px;
+                        vertical-alignment: center;
+                    }
+                }
+                Rectangle {
+                    height: 28px;
+                    border-width: 1px;
+                    border-radius: 3px;
+                    border-color: lu.has-focus ? #414a43 : #0b0d0e;
+                    background: #0d0f11;
+                    lu := TextInput {
+                        x: 9px; y: 0px;
+                        width: parent.width - 18px;
+                        height: parent.height;
+                        color: #e6e9e6;
+                        font-family: "JetBrains Mono";
+                        font-size: 9.5px;
+                        vertical-alignment: center;
+                        single-line: true;
+                        edited => { root.link-url = lu.text; }
+                    }
+                    Text {
+                        visible: lu.text == "";
+                        x: 9px; y: 0px;
+                        width: parent.width - 18px;
+                        height: parent.height;
+                        text: "https://example.com/live.m3u8";
+                        color: #565d60;
+                        font-family: "JetBrains Mono";
+                        font-size: 9.5px;
+                        vertical-alignment: center;
+                    }
+                }
+                Rectangle { height: 2px; background: transparent; }
+                HorizontalLayout {
+                    spacing: 8px;
+                    Rectangle { horizontal-stretch: 1; background: transparent; }
+                    Rectangle {
+                        width: 78px; height: 27px;
+                        border-radius: 3px;
+                        border-width: 1px;
+                        border-color: #0d0f10;
+                        background: @linear-gradient(180deg, #23272a, #1a1d20);
+                        Text { text: "取消"; color: #b9bfbe; font-size: 10px; width: 100%; height: 100%; horizontal-alignment: center; vertical-alignment: center; }
+                        TouchArea { mouse-cursor: pointer; clicked => { root.link-open = false; } }
+                    }
+                    Rectangle {
+                        width: 100px; height: 27px;
+                        border-radius: 3px;
+                        border-width: 1px;
+                        border-color: #6d211a;
+                        background: @linear-gradient(180deg, #d5483a, #b8372c);
+                        Text { text: "添加并播放"; color: #fff4f1; font-size: 10px; width: 100%; height: 100%; horizontal-alignment: center; vertical-alignment: center; }
+                        TouchArea {
+                            mouse-cursor: pointer;
+                            clicked => {
+                                root.add-link(ln.text, lu.text);
+                                root.link-open = false;
+                                ln.text = "";
+                                lu.text = "";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 设置弹窗
+    Rectangle {
+        visible: root.settings-open;
+        x: 0; y: 0; width: 100%; height: 100%;
+        background: rgba(4, 5, 6, 0.62);
+        TouchArea { clicked => { root.settings-open = false; } }
+
+        Rectangle {
+            width: 430px;
+            height: 368px;
+            x: (parent.width - self.width) / 2;
+            y: (parent.height - self.height) / 2;
+            border-radius: 9px;
+            border-width: 1px;
+            border-color: #0a0c0d;
+            background: @linear-gradient(180deg, #1f2327, #15181b);
+            drop-shadow-blur: 30px;
+            drop-shadow-color: #000000aa;
+            drop-shadow-offset-y: 10px;
+            VerticalLayout {
+                padding-left: 16px;
+                padding-right: 16px;
+                padding-top: 14px;
+                padding-bottom: 12px;
+                spacing: 0px;
+
+                HorizontalLayout {
+                    Text {
+                        text: "设置";
+                        color: #d9ddda;
+                        font-size: 12px;
+                        font-weight: 600;
+                        vertical-alignment: center;
+                    }
+                    Rectangle { horizontal-stretch: 1; }
+                    Text {
+                        text: "SETTINGS";
+                        color: #8a3a33;
+                        font-family: "JetBrains Mono";
+                        font-size: 6.6px;
+                        letter-spacing: 1.2px;
+                        vertical-alignment: center;
+                    }
+                }
+                Rectangle { height: 10px; }
+                Text { text: "启动"; color: #ff6a5d; font-family: "JetBrains Mono"; font-size: 6.4px; letter-spacing: 1.2px; }
+                Rectangle { height: 3px; }
+                SetRow { title: "开机自启"; en: "START WITH WINDOWS"; on: root.opt-autostart; toggled => { root.set-option("autostart", !root.opt-autostart); } }
+                SetRow { title: "启动后自动播放"; en: "AUTOPLAY ON LAUNCH"; on: root.opt-autoplay; toggled => { root.set-option("autoplay", !root.opt-autoplay); } }
+                SetRow { title: "接着上次电台"; en: "RESUME LAST STATION"; on: root.opt-resume; toggled => { root.set-option("resume", !root.opt-resume); } }
+                Rectangle { height: 12px; }
+                Text { text: "播放"; color: #ff6a5d; font-family: "JetBrains Mono"; font-size: 6.4px; letter-spacing: 1.2px; }
+                Rectangle { height: 3px; }
+                SetRow { title: "随机播放"; en: "SHUFFLE"; on: root.opt-shuffle; toggled => { root.set-option("shuffle", !root.opt-shuffle); } }
+                SetRow { title: "失败自动换台"; en: "SKIP DEAD STATIONS"; on: root.opt-skip; toggled => { root.set-option("skip", !root.opt-skip); } }
+                Rectangle { vertical-stretch: 1; }
+                HorizontalLayout {
+                    Text {
+                        text: "AIRWAVE PL-680 · 本地记忆";
+                        color: #5f6669;
+                        font-family: "JetBrains Mono";
+                        font-size: 6.4px;
+                        vertical-alignment: center;
+                    }
+                    Rectangle { horizontal-stretch: 1; }
+                    Rectangle {
+                        width: 78px; height: 27px;
+                        border-radius: 3px;
+                        border-width: 1px;
+                        border-color: #0d0f10;
+                        background: @linear-gradient(180deg, #23272a, #1a1d20);
+                        Text { text: "完成"; color: #b9bfbe; font-size: 10px; width: 100%; height: 100%; horizontal-alignment: center; vertical-alignment: center; }
+                        TouchArea { mouse-cursor: pointer; clicked => { root.settings-open = false; } }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,26 @@
+# 构建产物
+native/target/
+android/.gradle/
+android/.kotlin/
+android/build/
+android/app/build/
+*.exe
+*.apk
+*.log
+
+# 本地环境
+android/local.properties
+local.properties
+.idea/
+*.iml
+.vscode/
+
+# 不参与本仓库
+.tmp/
+src-tauri/
+radio/
+
+# 本地改写用的临时脚本
+native/patch_ui.py
+native/new_deck.txt
+native/new_sidebar.txt
