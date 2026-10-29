@@ -1,10 +1,10 @@
 'use strict';
 
-/* 安装包地址：上传到 R2 后替换这里的两行即可，页面上的下载按钮统一从这里取值 */
+/* 安装包放在 Cloudflare R2 公共桶，页面上的下载按钮统一从这里取值 */
 const DOWNLOADS = {
-  win: 'https://github.com/lovetwer',
-  apk: 'https://github.com/lovetwer',
-  repo: 'https://github.com/lovetwer',
+  win: 'https://pub-cf0b16fad0a5495d91c5f1a2cce14e44.r2.dev/AIRWAVE-PL680-Setup-1.0.exe',
+  apk: 'https://pub-cf0b16fad0a5495d91c5f1a2cce14e44.r2.dev/AIRWAVE-PL680-1.0.apk',
+  repo: 'https://github.com/lovetwer/airwave-pl680',
 };
 
 const $ = (s, r = document) => r.querySelector(s);

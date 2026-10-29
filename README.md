@@ -13,7 +13,21 @@
 | Android | Kotlin + Jetpack Compose + Media3，前台服务播放 | APK 9.0 MiB | 系统托管 |
 | Web | 原生 HTML/CSS/JS，无框架、无构建 | 140 KB | 浏览器标签页 |
 
-网页版：[部署地址见仓库 About / Releases]
+网页版：<https://airwave-pl680.pages.dev/>（Cloudflare Pages，全球 CDN）
+
+## 下载
+
+| 文件 | 大小 | 地址 |
+| --- | --- | --- |
+| Windows 免安装 exe | 11.0 MiB | <https://pub-cf0b16fad0a5495d91c5f1a2cce14e44.r2.dev/AIRWAVE-PL680-Setup-1.0.exe> |
+| Android APK | 9.0 MiB | <https://pub-cf0b16fad0a5495d91c5f1a2cce14e44.r2.dev/AIRWAVE-PL680-1.0.apk> |
+
+两个安装包都放在 Cloudflare R2 公共桶 `airwave-pl680` 里，校验和：
+
+```
+53023f53505c65211b40a667d3a9ff952a9820acbb872c4d6e1427072f02c496  AIRWAVE-PL680-Setup-1.0.exe
+ccc9ad252d1b71b26e515f4aad03ff5c064db688decce2de2fc70f63f72bccae  AIRWAVE-PL680-1.0.apk
+```
 
 ## 声音与显示
 
@@ -59,6 +73,19 @@ gradle assembleRelease
 cd web
 python -m http.server 8099
 # 打开 http://127.0.0.1:8099/
+```
+
+重新部署到 Cloudflare Pages（需要先 `wrangler login`）：
+
+```bash
+wrangler pages deploy web --project-name airwave-pl680 --branch main
+```
+
+安装包重新上传到 R2：
+
+```bash
+wrangler r2 object put airwave-pl680/AIRWAVE-PL680-Setup-1.0.exe --file AIRWAVE-PL680-Setup-1.0.exe --content-type application/vnd.microsoft.portable-executable --remote
+wrangler r2 object put airwave-pl680/AIRWAVE-PL680-1.0.apk --file AIRWAVE-PL680-1.0.apk --content-type application/vnd.android.package-archive --remote
 ```
 
 ## 目录结构
