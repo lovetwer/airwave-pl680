@@ -555,6 +555,8 @@ a{color:inherit}
 .tips div{font-size:11.5px;color:#7d8487;line-height:1.8}
 .tips b{color:#b9bfbe;font-weight:600;margin-right:6px}
 .tips .mono{font-size:7.8px;letter-spacing:.4px;color:#8d9497;background:#0d0f11;border:1px solid #1c2023;border-radius:2px;padding:1px 5px}
+.tips a{color:var(--red-ink);text-decoration:none;border-bottom:1px solid rgba(224,72,60,.35)}
+.tips a:hover{border-bottom-color:var(--red-ink)}
 
 /* ---------------- features ---------------- */
 .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
