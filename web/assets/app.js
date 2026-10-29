@@ -2,8 +2,8 @@
 
 /* 安装包放在 Cloudflare R2 公共桶，页面上的下载按钮统一从这里取值 */
 const DOWNLOADS = {
-  win: 'https://pub-cf0b16fad0a5495d91c5f1a2cce14e44.r2.dev/AIRWAVE-PL680-Setup-1.0.exe',
-  apk: 'https://pub-cf0b16fad0a5495d91c5f1a2cce14e44.r2.dev/AIRWAVE-PL680-1.0.apk',
+  win: 'https://dl.800820882.xyz/AIRWAVE-PL680-Setup-1.0.exe',
+  apk: 'https://dl.800820882.xyz/AIRWAVE-PL680-1.0.apk',
   repo: 'https://github.com/lovetwer/airwave-pl680',
 };
 

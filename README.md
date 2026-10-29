@@ -13,16 +13,16 @@
 | Android | Kotlin + Jetpack Compose + Media3，前台服务播放 | APK 9.0 MiB | 系统托管 |
 | Web | 原生 HTML/CSS/JS，无框架、无构建 | 140 KB | 浏览器标签页 |
 
-网页版：<https://airwave-pl680.pages.dev/>（Cloudflare Pages，全球 CDN）
+网页版：<https://airwave.800820882.xyz/>（Cloudflare Pages + 自定义域名）
 
 ## 下载
 
 | 文件 | 大小 | 地址 |
 | --- | --- | --- |
-| Windows 免安装 exe | 11.0 MiB | <https://pub-cf0b16fad0a5495d91c5f1a2cce14e44.r2.dev/AIRWAVE-PL680-Setup-1.0.exe> |
-| Android APK | 9.0 MiB | <https://pub-cf0b16fad0a5495d91c5f1a2cce14e44.r2.dev/AIRWAVE-PL680-1.0.apk> |
+| Windows 免安装 exe | 11.0 MiB | <https://dl.800820882.xyz/AIRWAVE-PL680-Setup-1.0.exe> |
+| Android APK | 9.0 MiB | <https://dl.800820882.xyz/AIRWAVE-PL680-1.0.apk> |
 
-两个安装包都放在 Cloudflare R2 公共桶 `airwave-pl680` 里，校验和：
+两个安装包都放在 Cloudflare R2 桶 `airwave-pl680` 里，通过自定义域名 `dl.800820882.xyz` 分发，校验和：
 
 ```
 53023f53505c65211b40a667d3a9ff952a9820acbb872c4d6e1427072f02c496  AIRWAVE-PL680-Setup-1.0.exe
@@ -80,6 +80,8 @@ python -m http.server 8099
 ```bash
 wrangler pages deploy web --project-name airwave-pl680 --branch main
 ```
+
+Pages 项目 `airwave-pl680` 绑了自定义域名 `airwave.800820882.xyz`；R2 桶绑了 `dl.800820882.xyz`。
 
 安装包重新上传到 R2：
 
