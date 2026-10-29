@@ -24,3 +24,6 @@ radio/
 native/patch_ui.py
 native/new_deck.txt
 native/new_sidebar.txt
+
+# wrangler 本地状态
+.wrangler/
