@@ -82,6 +82,11 @@ wrangler pages deploy web --project-name airwave-pl680 --branch main
 ```
 
 Pages 项目 `airwave-pl680` 绑了自定义域名 `airwave.800820882.xyz`；R2 桶绑了 `dl.800820882.xyz`。
+桶的 r2.dev 测试域名是关闭的（带限流，也不希望出现第二个下载入口）；要临时开回来：
+
+```bash
+wrangler r2 bucket dev-url enable airwave-pl680
+```
 
 安装包重新上传到 R2：
 
